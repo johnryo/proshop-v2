@@ -1,8 +1,10 @@
 import * as dotenv from 'dotenv';
-dotenv.config();
 import express from 'express';
 import connectDB from './config/db.js';
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import productRouter from './routes/productRoutes.js';
+
+dotenv.config();
 const port = process.env.PORT || 5000;
 
 connectDB(); // Connect to MongoDB
@@ -14,5 +16,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/products', productRouter);
+
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(port, () => console.log(`Server running on port ${port}...`));
