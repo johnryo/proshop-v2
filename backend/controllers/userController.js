@@ -1,9 +1,35 @@
+import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import asyncHandler from '../middleware/asyncHandler.js';
 
-// POST /api/users/login - authenticate & get token
+// POST /api/users/auth - authenticate & get token
 const authUser = asyncHandler(async (req, res) => {
-  res.status(200).send('auth user');
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+
+  if (user && (await user.matchPassword(password))) {
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '30d',
+    });
+
+    // Set JWT as HTTP-only cookie
+    res.cookie('jwt', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== 'development',
+      sameSite: 'strict',
+      maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
+    });
+
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    res.status(401);
+    throw new Error('Invalid credentials');
+  }
 });
 
 // POST /api/users - register user
@@ -13,7 +39,11 @@ const registerUser = asyncHandler(async (req, res) => {
 
 // POST /api/users/logout - logout user & clear cookie
 const logoutUser = asyncHandler(async (req, res) => {
-  res.status(200).send('logout user');
+  res.cookie('jwt', '', {
+    httpOnly: true,
+    expires: new Date(0),
+  });
+  res.status(200).json({ message: 'Logged out successfully' });
 });
 
 // GET /api/users/profile - get user profile
