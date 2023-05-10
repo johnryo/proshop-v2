@@ -12,6 +12,8 @@ import store from './store';
 import './assets/styles/bootstrap.custom.css';
 import './assets/styles/index.css';
 import App from './App';
+
+import { PrivateRoute } from './components';
 import {
   HomeScreen,
   ProductScreen,
@@ -19,6 +21,7 @@ import {
   LoginScreen,
   RegisterScreen,
   ShippingScreen,
+  PaymentScreen,
 } from './screens';
 
 const router = createBrowserRouter(
@@ -29,7 +32,11 @@ const router = createBrowserRouter(
       <Route path='/cart' element={<CartScreen />} />
       <Route path='/login' element={<LoginScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
-      <Route path='/shipping' element={<ShippingScreen />} />
+
+      <Route path='' element={<PrivateRoute />}>
+        <Route path='/shipping' element={<ShippingScreen />} />
+        <Route path='/payment' element={<PaymentScreen />} />
+      </Route>
     </Route>
   )
 );

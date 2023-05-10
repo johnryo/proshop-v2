@@ -5,7 +5,7 @@ import {
   useRegisterMutation,
 } from './usersApiSlice';
 import { setCredentials, logout } from './authSlice';
-import { saveShippingAddress } from './cartSlice';
+import { saveShippingAddress, savePaymentMethod } from './cartSlice';
 
 export {
   apiSlice,
@@ -15,6 +15,7 @@ export {
   logout,
   useRegisterMutation,
   saveShippingAddress,
+  savePaymentMethod,
 };
 
 export { default as cartSliceReducer } from './cartSlice';
