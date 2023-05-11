@@ -10,7 +10,7 @@ import {
   Card,
 } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
-import { addToCart, removeFromCart } from '../slices/cartSlice';
+import { addToCart, removeFromCart } from '../slices';
 import { Message } from '../components';
 
 const CartScreen = () => {
