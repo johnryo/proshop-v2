@@ -8,7 +8,12 @@ import {
   useGetProductsQuery,
   useGetProductDetailsQuery,
 } from './productsApiSlice';
-import { useCreateOrderMutation } from './ordersApiSlice';
+import {
+  useCreateOrderMutation,
+  useGetOrderDetailsQuery,
+  usePayOrderMutation,
+  useGetPayPalClientIdQuery,
+} from './ordersApiSlice';
 import { setCredentials, logout } from './authSlice';
 import {
   addToCart,
@@ -26,6 +31,9 @@ export {
   useGetProductsQuery,
   useGetProductDetailsQuery,
   useCreateOrderMutation,
+  useGetOrderDetailsQuery,
+  usePayOrderMutation,
+  useGetPayPalClientIdQuery,
   setCredentials,
   logout,
   addToCart,
