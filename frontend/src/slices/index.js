@@ -3,6 +3,7 @@ import {
   useLoginMutation,
   useLogoutMutation,
   useRegisterMutation,
+  useProfileMutation,
 } from './usersApiSlice';
 import {
   useGetProductsQuery,
@@ -13,6 +14,9 @@ import {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useGetPayPalClientIdQuery,
+  useGetMyOrdersQuery,
+  useGetOrdersQuery,
+  useDeliverOrderMutation,
 } from './ordersApiSlice';
 import { setCredentials, logout } from './authSlice';
 import {
@@ -28,12 +32,16 @@ export {
   useLoginMutation,
   useLogoutMutation,
   useRegisterMutation,
+  useProfileMutation,
   useGetProductsQuery,
   useGetProductDetailsQuery,
   useCreateOrderMutation,
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useGetPayPalClientIdQuery,
+  useGetMyOrdersQuery,
+  useGetOrdersQuery,
+  useDeliverOrderMutation,
   setCredentials,
   logout,
   addToCart,
