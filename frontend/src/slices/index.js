@@ -9,6 +9,7 @@ import {
   useGetProductsQuery,
   useGetProductDetailsQuery,
   useCreateProductMutation,
+  useUpdateProductMutation,
 } from './productsApiSlice';
 import {
   useCreateOrderMutation,
@@ -37,6 +38,7 @@ export {
   useGetProductsQuery,
   useGetProductDetailsQuery,
   useCreateProductMutation,
+  useUpdateProductMutation,
   useCreateOrderMutation,
   useGetOrderDetailsQuery,
   usePayOrderMutation,
