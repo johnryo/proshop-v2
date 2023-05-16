@@ -2,16 +2,30 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button, Row, Col } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import { useGetProductsQuery, useCreateProductMutation } from '../../slices';
+import {
+  useGetProductsQuery,
+  useCreateProductMutation,
+  useDeleteProductMutation,
+} from '../../slices';
 import { Loader, Message } from '../../components';
 
 const ProductListScreen = () => {
   const { data: products, isLoading, error, refetch } = useGetProductsQuery();
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
+  const [deleteProduct, { isLoading: loadingDelete }] =
+    useDeleteProductMutation();
 
-  const deleteHandler = (id) => {
-    console.log('delete', id);
+  const deleteHandler = async (id) => {
+    if (window.confirm('Are you sure?')) {
+      try {
+        await deleteProduct(id);
+        toast.success('Product deleted!');
+        refetch();
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    }
   };
 
   const createProductHandler = async () => {
@@ -37,7 +51,10 @@ const ProductListScreen = () => {
           </Button>
         </Col>
       </Row>
+
       {loadingCreate && <Loader />}
+      {loadingDelete && <Loader />}
+
       {isLoading ? (
         <Loader />
       ) : error ? (

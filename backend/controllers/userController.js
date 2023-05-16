@@ -2,7 +2,7 @@ import User from '../models/User.js';
 import asyncHandler from '../middleware/asyncHandler.js';
 import generateToken from '../utils/generateToken.js';
 
-// POST /api/users/auth - authenticate & get token
+// POST /api/users/auth - Authenticate & get token - Public
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
@@ -22,7 +22,7 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-// POST /api/users - register user
+// POST /api/users - Register user - Public
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -48,7 +48,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-// POST /api/users/logout - logout user & clear cookie
+// POST /api/users/logout - Logout user & clear cookie - Public
 const logoutUser = asyncHandler(async (req, res) => {
   res.cookie('jwt', '', {
     httpOnly: true,
@@ -57,7 +57,7 @@ const logoutUser = asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'Logged out' });
 });
 
-// GET /api/users/profile - get user profile
+// GET /api/users/profile - Get user profile - Private
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
@@ -74,7 +74,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-// PUT /api/users/profile - update user profile
+// PUT /api/users/profile - Update user profile - Private
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
@@ -100,24 +100,61 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-// GET /api/users - get all users - ADMIN
+// GET /api/users - Get all users - Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
-  res.status(200).send('get users');
+  const users = await User.find({});
+  res.status(200).json(users);
 });
 
-// GET /api/users/:id - get user by ID - ADMIN
+// GET /api/users/:id - Get user by ID - Private/Admin
 const getUserById = asyncHandler(async (req, res) => {
-  res.status(200).send('get user by id');
+  const user = await User.findById(req.params.id).select('-password');
+
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
 });
 
-// DELETE /api/users/:id - delete user - ADMIN
+// DELETE /api/users/:id - Delete user - Private/Admin
 const deleteUser = asyncHandler(async (req, res) => {
-  res.status(200).send('delete user');
+  const user = await User.findById(req.params.id);
+
+  if (user) {
+    if (user.isAdmin) {
+      res.status(400);
+      throw new Error('Cannot delete admin user');
+    }
+    await User.deleteOne({ _id: user._id });
+    res.status(200).json({ message: 'User deleted successfully' });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
 });
 
-// PUT /api/users/:id - update user - ADMIN
+// PUT /api/users/:id - Update user - Ptivate/Admin
 const updateUser = asyncHandler(async (req, res) => {
-  res.status(200).send('update user');
+  const user = await User.findById(req.params.id);
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.isAdmin = Boolean(req.body.isAdmin);
+
+    const updatedUser = await user.save();
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
 });
 
 export {
