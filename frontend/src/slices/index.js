@@ -16,6 +16,7 @@ import {
   useUpdateProductMutation,
   useUploadProductImageMutation,
   useDeleteProductMutation,
+  useCreateReviewMutation,
 } from './productsApiSlice';
 import {
   useCreateOrderMutation,
@@ -51,6 +52,7 @@ export {
   useUpdateProductMutation,
   useUploadProductImageMutation,
   useDeleteProductMutation,
+  useCreateReviewMutation,
   useCreateOrderMutation,
   useGetOrderDetailsQuery,
   usePayOrderMutation,
