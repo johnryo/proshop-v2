@@ -3,7 +3,7 @@ import asyncHandler from '../middleware/asyncHandler.js';
 
 // GET /api/products - Get all products - Public
 const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 8;
+  const pageSize = process.env.PAGINATION_LIMIT;
   const page = Number(req.query.pageNumber) || 1;
 
   const keyword = req.query.keyword
