@@ -1,7 +1,13 @@
 import { useParams, Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 import { useGetProductsQuery } from '../slices/productsApiSlice';
-import { Product, Loader, Message, Paginate } from '../components';
+import {
+  Product,
+  Loader,
+  Message,
+  Paginate,
+  ProductCarousel,
+} from '../components';
 
 const HomeScreen = () => {
   const { pageNumber, keyword } = useParams();
@@ -12,7 +18,9 @@ const HomeScreen = () => {
 
   return (
     <>
-      {keyword && (
+      {!keyword ? (
+        <ProductCarousel />
+      ) : (
         <Link to='/' className='btn btn-light mt-2 mb-3'>
           Go Back
         </Link>

@@ -1,7 +1,7 @@
 import Product from '../models/Product.js';
 import asyncHandler from '../middleware/asyncHandler.js';
 
-// GET /api/products - Fetch all products - Public
+// GET /api/products - Get all products - Public
 const getProducts = asyncHandler(async (req, res) => {
   const pageSize = 8;
   const page = Number(req.query.pageNumber) || 1;
@@ -18,7 +18,7 @@ const getProducts = asyncHandler(async (req, res) => {
   res.status(200).json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
-// GET /api/products/:id - Fetch single product - Public
+// GET /api/products/:id - Get single product - Public
 const getProductById = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
 
@@ -124,6 +124,12 @@ const createProductReview = asyncHandler(async (req, res) => {
   }
 });
 
+// GET /api/products/top - Get top-rated products - Public
+const getTopProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+  res.status(200).json(products);
+});
+
 export {
   getProducts,
   getProductById,
@@ -131,4 +137,5 @@ export {
   updateProduct,
   deleteProduct,
   createProductReview,
+  getTopProducts,
 };

@@ -10,3 +10,5 @@ export { default as CheckoutSteps } from './CheckoutSteps';
 export { default as AdminRoute } from './AdminRoute';
 export { default as Paginate } from './Paginate';
 export { default as SearchBox } from './SearchBox';
+export { default as ProductCarousel } from './ProductCarousel';
+export { default as Meta } from './Meta';

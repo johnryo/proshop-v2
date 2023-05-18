@@ -16,7 +16,7 @@ import {
   useGetProductDetailsQuery,
   useCreateReviewMutation,
 } from '../slices';
-import { Rating, Loader, Message } from '../components';
+import { Rating, Loader, Message, Meta } from '../components';
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -76,7 +76,7 @@ const ProductScreen = () => {
         </Message>
       ) : (
         <>
-          {/* <Meta title={product.name} description={product.description} /> */}
+          <Meta title={product.name} />
           <Row>
             <Col md={6}>
               <Image src={product.image} alt={product.name} fluid />

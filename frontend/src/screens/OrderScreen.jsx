@@ -63,14 +63,17 @@ const OrderScreen = () => {
       }
     });
   }
-  async function onApproveTest() {
-    await payOrder({ orderId, details: { payer: {} } });
-    refetch();
-    toast.success('Payment successful');
-  }
+
+  // async function onApproveTest() {
+  //   await payOrder({ orderId, details: { payer: {} } });
+  //   refetch();
+  //   toast.success('Payment successful');
+  // }
+
   function onError(err) {
     toast.error(err.message);
   }
+
   function createOrder(data, actions) {
     return actions.order
       .create({
@@ -186,13 +189,9 @@ const OrderScreen = () => {
                   <Col>${order.taxPrice}</Col>
                 </Row>
 
-                <Row>
-                  <Col>
-                    <strong>Total</strong>
-                  </Col>
-                  <Col>
-                    <strong>${order.totalPrice}</strong>
-                  </Col>
+                <Row style={{ fontWeight: '700' }}>
+                  <Col>Total</Col>
+                  <Col>${order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
