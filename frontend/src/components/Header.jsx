@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Container, Navbar, Nav, Badge, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
-import { logout, useLogoutMutation } from '../slices';
+import { logout, useLogoutMutation, resetCart } from '../slices';
 import SearchBox from './SearchBox';
 import logo from '../assets/logo.png';
 
@@ -20,6 +20,7 @@ const Header = () => {
     try {
       await logoutApiCall().unwrap();
       dispatch(logout());
+      dispatch(resetCart);
       navigate('/login');
     } catch (err) {
       console.log(err);

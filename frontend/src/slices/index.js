@@ -35,6 +35,7 @@ import {
   saveShippingAddress,
   savePaymentMethod,
   clearCartItems,
+  resetCart,
 } from './cartSlice';
 
 export {
@@ -69,6 +70,7 @@ export {
   saveShippingAddress,
   savePaymentMethod,
   clearCartItems,
+  resetCart,
 };
 
 export { default as cartSliceReducer } from './cartSlice';
